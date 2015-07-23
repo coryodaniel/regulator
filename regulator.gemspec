@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = "regulator"
   spec.version       = Regulator::VERSION
   spec.authors       = ["Cory O'Daniel"]
-  spec.email         = ["cory.odaniel@fullscreen.net"]
+  spec.email         = ["gems@coryodaniel.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Minimal controller-based authorization for Rails}
+  spec.description   = %q{Minimal controller-based authorization for Rails}
+  spec.homepage      = "https://github.com/coryodaniel/regulator"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -27,7 +27,12 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_dependency "activesupport", ">= 3.0.0"
+  spec.add_development_dependency "activemodel", ">= 3.0.0"
+  spec.add_development_dependency "actionpack", ">= 3.0.0"
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rspec", ">=2.0.0"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "yard"
 end

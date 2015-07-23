@@ -5,10 +5,61 @@ require "regulator"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
+class Project;end;
+class User;end;
 
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
+class ProjectPolicy < Struct.new(:user, :project);end;
+class LegacyProjectPolicy < Struct.new(:user, :project);end;
 
-require "irb"
-IRB.start
+class ApplicationController
+  def current_user
+    User.new
+  end
+end
+
+class ProjectsController < ApplicationController
+  include Regulator
+end
+
+module Api
+  class UserPolicy < Struct.new(:user, :record);end;
+
+  class BaseController < ApplicationController
+    include Regulator
+  end
+
+  module V2
+    class UserPolicy < Struct.new(:user, :record);end;
+    class ProjectsController < Api::BaseController
+      def self.policy_class
+        ProjectPolicy
+      end
+    end
+
+    class UsersController < Api::BaseController
+    end
+  end
+
+  class UsersController < Api::BaseController
+  end
+
+  class ProjectsController < Api::BaseController
+    def self.policy_class
+      LegacyProjectPolicy
+    end
+  end
+end
+
+ProjectsController.new.policy_namespace #=> nil
+Api::ProjectsController.new.policy_namespace #=> Api
+Api::V2::ProjectsController.new.policy_namespace #=> Api::V2
+
+ProjectsController.new.policy(Project) #=> ProjectPolicy
+Api::ProjectsController.new.policy(Project) #=> LegacyProjectPolicy
+Api::V2::ProjectsController.new.policy(Project) #=> ProjectPolicy
+
+Api::UsersController.new.policy(User) #=> Api::UserPolicy
+Api::V2::UsersController.new.policy(User) #=> Api::V2::UserPolicy
+
+require "pry"
+Pry.start
