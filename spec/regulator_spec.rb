@@ -116,8 +116,23 @@ describe Regulator do
     end
 
     context 'when the model is namespaced' do
-      let(:cool_song){ CoolPlugin::Comment.new }
-      pending ''
+      let(:cool_comment){ CoolPlugin::Comment.new }
+
+      describe '#policy' do
+        let(:policy){ controller.policy(cool_comment) }
+        it{ expect(policy).to be_kind_of(Api::CoolPlugin::CommentPolicy) }
+        it{ expect(policy.user).to be user }
+        it{ expect(policy.comment).to be cool_comment }
+      end
+
+      describe '#policy_scope' do
+        let(:policy_scope){ controller.policy_scope(CoolPlugin::Comment) }
+        it{ expect(policy_scope).to be CoolPlugin::Comment }
+      end
+
+      describe '#policy_namespace' do
+        it{ expect(controller.policy_namespace).to be Api }
+      end
     end
 
     describe "#verify_authorized" do

@@ -1,6 +1,7 @@
 # Regulator
-
-![Regulator](https://upload.wikimedia.org/wikipedia/commons/a/ac/Nat_Powers_%26_Warren_G.jpg)
+[![Build Status](https://travis-ci.org/coryodaniel/regulator.svg)](https://travis-ci.org/coryodaniel/regulator)
+[![Code Climate](https://codeclimate.com/github/coryodaniel/regulator/badges/gpa.svg)](https://codeclimate.com/github/coryodaniel/regulator)
+[![Test Coverage](https://codeclimate.com/github/coryodaniel/regulator/badges/coverage.svg)](https://codeclimate.com/github/coryodaniel/regulator/coverage)
 
 Regulator is a clone of the [Pundit](https://github.com/elabs/pundit) gem and provides a pundit compatible DSL that has **controller namespaced** authorization polices instead of *model namespaced*.
 
@@ -15,10 +16,6 @@ Why not contribute to pundit? [It's](https://github.com/elabs/pundit/issues/12) 
 ## TODOs
   * [ ] generators
     * [ ] activeadmin-regulator-adapter gem or generator
-  * [ ] hound
-  * [ ] travis
-  * [ ] code climate
-  * [ ] contributing wiki
   * [ ] documentation (Usage section below, mock pundits)
     * [ ] Lotus examples
     * [ ] Grape examples
@@ -26,6 +23,7 @@ Why not contribute to pundit? [It's](https://github.com/elabs/pundit/issues/12) 
     * [ ] Custom permissions examples
     * [ ] RoleModel gem examples
     * [ ] rolify gem examples
+  * [ ] contributing wiki
 
 ## Installation
 
@@ -59,3 +57,7 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## Contributors
   * [Cory O'Daniel](http://linkedin.com/in/coryodaniel)
+
+  Thanks to Warren G for the inspiration, bro.
+
+  ![Regulator](https://upload.wikimedia.org/wikipedia/commons/a/ac/Nat_Powers_%26_Warren_G.jpg)
