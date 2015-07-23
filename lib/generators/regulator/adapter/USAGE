@@ -1,0 +1,8 @@
+Description:
+    Generates an ActiveAdmin Regulator adapter
+
+Example:
+    rails generate regulator:active_admin
+
+    This will create:
+        lib/regulator_active_admin_adapter.rb

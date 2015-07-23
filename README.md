@@ -14,8 +14,6 @@ I built this because I believe authorization should be controller-based, not mod
 Why not contribute to pundit? [It's](https://github.com/elabs/pundit/issues/12) [been](https://github.com/elabs/pundit/issues/178) an [on going](https://github.com/elabs/pundit/search?q=namespace&type=Issues&utf8=%E2%9C%93) 'issue' in pundit and it doesn't look [like it'll be reality.](https://github.com/elabs/pundit/pull/190#issuecomment-53052356)
 
 ## TODOs
-  * [ ] generators
-    * [ ] activeadmin-regulator-adapter gem or generator
   * [ ] documentation
     * [ ] Usage section below, mock pundit's
     * [ ] yard doc
@@ -45,7 +43,46 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+No docs yet, check out the [specs](https://github.com/coryodaniel/regulator/blob/master/spec/regulator_spec.rb)
+
+### Generators
+
+Install regulator
+```bash
+  rails g regulator:install
+```
+
+Create a new policy and policy test/spec
+```bash
+  rails g regulator:policy User
+```
+
+Regulator comes with a generator for creating an ActiveAdmin adapter
+```bash
+  rails g regulator:activeadmin
+```
+
+This will create an adapter in your ```lib``` folder.
+
+Be sure to set the following in your ActiveAdmin initializer:
+```ruby
+config.authorization_adapter = "ActiveAdmin::RegulatorAdapter"
+
+# Optional
+# Sets a scope for all ActiveAdmin polices to exist in
+#
+# Example
+# app/policies/admin_policies/user_policy.rb #=> AdminPolicies::UserPolicy
+#
+# config.regulator_policy_namespace = "AdminPolicies"
+config.regulator_policy_namespace = nil
+
+# Optional
+# Sets the default policy to use if no policy is found
+#
+# config.regulator_default_policy = BlackListPolicy
+config.regulator_default_policy = nil
+```
 
 ## Development
 
