@@ -16,7 +16,9 @@ Why not contribute to pundit? [It's](https://github.com/elabs/pundit/issues/12) 
 ## TODOs
   * [ ] generators
     * [ ] activeadmin-regulator-adapter gem or generator
-  * [ ] documentation (Usage section below, mock pundits)
+  * [ ] documentation
+    * [ ] Usage section below, mock pundit's
+    * [ ] yard doc
     * [ ] Lotus examples
     * [ ] Grape examples
     * [ ] ROM examples

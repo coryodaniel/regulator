@@ -2,10 +2,17 @@ module Regulator
   class PolicyFinder
     attr_reader :object
     attr_reader :controller
+    attr_reader :namespace
 
-    def initialize(object, controller = nil)
+    def initialize(object, controller_or_namespace = nil)
       @object = object
-      @controller = controller
+
+      if controller_or_namespace.is_a?(Module)
+        @namespace = controller_or_namespace
+      elsif controller_or_namespace
+        @controller = controller_or_namespace
+        @namespace  = @controller.policy_namespace
+      end
     end
 
     def scope
@@ -64,11 +71,7 @@ module Regulator
 
         policy_name = "#{klass}#{SUFFIX}"
 
-        if controller
-          "#{controller.policy_namespace}::#{policy_name}"
-        else
-          policy_name
-        end
+        namespace ? "#{namespace}::#{policy_name}" : policy_name
       end
     end
 

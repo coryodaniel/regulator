@@ -20,6 +20,7 @@ module Regulator
         @query  = options[:query]
         @record = options[:record]
         @policy = options[:policy]
+        @controller_or_namespace = options[:controller_or_namespace]
 
         message = options.fetch(:message) { "not allowed to #{query} this #{record.inspect}" }
       end
@@ -34,32 +35,32 @@ module Regulator
   extend ActiveSupport::Concern
 
   class << self
-    def authorize(user, record, query)
-      policy = policy!(user, record)
+    def authorize(user, record, query, controller_or_namespace = nil)
+      policy = policy!(user, record, controller_or_namespace)
 
       unless policy.public_send(query)
-        raise NotAuthorizedError.new(query: query, record: record, policy: policy)
+        raise NotAuthorizedError.new(query: query, record: record, policy: policy, controller_or_namespace: controller_or_namespace)
       end
 
       true
     end
 
-    def policy_scope(user, scope, controller = nil)
-      policy_scope = PolicyFinder.new(scope,controller).scope
+    def policy_scope(user, scope, controller_or_namespace = nil)
+      policy_scope = PolicyFinder.new(scope,controller_or_namespace).scope
       policy_scope.new(user, scope).resolve if policy_scope
     end
 
-    def policy_scope!(user, scope, controller = nil)
-      PolicyFinder.new(scope,controller).scope!.new(user, scope).resolve
+    def policy_scope!(user, scope, controller_or_namespace = nil)
+      PolicyFinder.new(scope,controller_or_namespace).scope!.new(user, scope).resolve
     end
 
-    def policy(user, record, controller = nil)
-      policy = PolicyFinder.new(record,controller).policy
+    def policy(user, record, controller_or_namespace = nil)
+      policy = PolicyFinder.new(record,controller_or_namespace).policy
       policy.new(user, record) if policy
     end
 
-    def policy!(user, record, controller = nil)
-      PolicyFinder.new(record,controller).policy!.new(user, record)
+    def policy!(user, record, controller_or_namespace = nil)
+      PolicyFinder.new(record,controller_or_namespace).policy!.new(user, record)
     end
   end
 

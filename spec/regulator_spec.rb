@@ -4,6 +4,13 @@ describe Regulator do
   let(:user) { double }
   let(:params) { { :action => 'update' } }
 
+  context 'when supplying a specific module namespace' do
+    let(:song) { Song.new(user: user) }
+    let(:policy){ Regulator.policy!(user, song, Api::V2) }
+
+    it{ expect(policy).to be_kind_of(Api::V2::SongPolicy) }
+  end
+
   context 'when the controller is namespaced multiple levels deep' do
     let(:song) { Song.new(user: user) }
     let(:controller){ Api::V2::SongsController.new(user, params) }
