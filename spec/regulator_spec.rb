@@ -103,6 +103,30 @@ describe Regulator do
     end
   end
 
+  context 'when the controller explicitly sets the policy_namespace to nil' do
+    let(:controller){ Api::PlaylistsController.new(user, params) }
+    let(:playlist){ Playlist.new }
+
+    before do
+      Api::PlaylistsController.class_eval do
+        def self.policy_namespace
+          nil
+        end
+      end
+    end
+
+    describe '#policy' do
+      let(:policy){ controller.policy(playlist) }
+      it{ expect(policy).to be_kind_of(PlaylistPolicy) }
+      it{ expect(policy.user).to be user }
+      it{ expect(policy.playlist).to be playlist }
+    end
+
+    describe '#policy_namespace' do
+      it{ expect(controller.policy_namespace).to be(nil) }
+    end
+  end
+
   context 'when the controller is namespaced' do
     let(:controller){ Api::ArtistsController.new(user, params) }
     let(:artist) { Artist.new(user: user) }

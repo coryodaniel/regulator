@@ -93,6 +93,13 @@ class MusicAlbumPolicy::Scope < Struct.new(:user, :scope)
   end
 end
 
+class PlaylistPolicy < Struct.new(:user, :playlist); end
+class PlaylistPolicy::Scope < Struct.new(:user, :scope)
+  def resolve
+    scope
+  end
+end
+
 class CoolPlugin::CommentPolicy < Struct.new(:user, :comment); end
 class CoolPlugin::CommentPolicy::Scope < Struct.new(:user, :scope)
   def resolve

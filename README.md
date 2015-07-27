@@ -182,7 +182,9 @@ class Api::Post
     PostPolicy
   end
 end
+```
 
+``` ruby
 # Here the admin namespace could be told to use the same policy as the API namespace
 class Admin::Post
   # By default, Regulator will look for Admin::PostPolicy
@@ -199,7 +201,9 @@ class Admin::Post
     end
   end
 end
+```
 
+``` ruby
 class Admin::Comment
   def self.policy_namespace
     # Will make regulator look for ActiveAdmin::CommentPolicy instead of
@@ -220,7 +224,7 @@ This table explains what policies Regulator will look for in different scenarios
 | AlbumController                                        | Album            |  AlbumPolicy                   |
 | Api::AlbumController                                   | Album            |  Api::AlbumPolicy              |
 | Admin::AlbumController                                 | Album            |  Admin::AlbumPolicy            |
-| Admin::AlbumController.policy_namespace = 'SuperUse'   | Album            |  SuperUser::AlbumPolicy        |
+| Admin::AlbumController.policy_namespace = 'SuperUser'  | Album            |  SuperUser::AlbumPolicy        |
 | Admin::AlbumContoller                                  | MySongGem::Album |  Admin::MySongGem::AlbumPolicy |
 | SongController#policy_class = "Track"                  | Song             |  TrackPolicy                   |
 | SongController.policy_class = "Track"                  | Song             |  TrackPolicy                   |
@@ -253,5 +257,3 @@ The gem is available as open source under the terms of the [MIT License](http://
     * [ ] RoleModel gem examples
     * [ ] rolify gem examples
   * [ ] contributing wiki
-  * [ ] fallback to model level if controller level isn't found?
-  * [ ] setting controller policy_namespace explicitly to nil -> Should use demodulized policy if found
