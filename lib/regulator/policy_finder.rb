@@ -7,11 +7,31 @@ module Regulator
     def initialize(object, controller_or_namespace = nil)
       @object = object
 
-      if controller_or_namespace.is_a?(Module)
+      if controller_or_namespace.instance_of? Module
+        # Its a Module
         @namespace = controller_or_namespace
-      elsif controller_or_namespace
+      elsif controller_or_namespace.instance_of? Class
+        # Controller Class
         @controller = controller_or_namespace
-        @namespace  = @controller.policy_namespace
+
+        # ActiveAdmin uses the Regulator API directly, it doesnt mix it into the controllers
+        @namespace = if @controller.respond_to?(:policy_namespace)
+          # if the controller explicitly sets the policy_namespace to we want to keep it nil
+          @controller.try(:policy_namespace)
+        else
+          @controller.parent
+        end
+      elsif controller_or_namespace
+        # Controller Instance
+        @controller = controller_or_namespace
+
+        # ActiveAdmin uses the Regulator API directly, it doesnt mix it into the controllers
+        @namespace = if @controller.respond_to?(:policy_namespace)
+          # if the controller explicitly sets the policy_namespace to we want to keep it nil
+          @controller.try(:policy_namespace)
+        else
+          @controller.class.parent
+        end
       end
     end
 

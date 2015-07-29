@@ -225,9 +225,27 @@ This table explains what policies Regulator will look for in different scenarios
 | Api::AlbumController                                   | Album            |  Api::AlbumPolicy              |
 | Admin::AlbumController                                 | Album            |  Admin::AlbumPolicy            |
 | Admin::AlbumController.policy_namespace = 'SuperUser'  | Album            |  SuperUser::AlbumPolicy        |
+| Admin::AlbumController.policy_namespace = nil          | Album            |  AlbumPolicy                   |
 | Admin::AlbumContoller                                  | MySongGem::Album |  Admin::MySongGem::AlbumPolicy |
-| SongController#policy_class = "Track"                  | Song             |  TrackPolicy                   |
-| SongController.policy_class = "Track"                  | Song             |  TrackPolicy                   |
+| SongController#policy_class = TrackPolicy              | Song             |  TrackPolicy                   |
+| SongController.policy_class = Legacy::TrackPolicy      | Song             |  Legacy::TrackPolicy           |
+
+```policy_class``` at the controller-level is king. Setting it will override all logic for determining the policy to use.
+
+## ActiveAdmin Auth Adapter
+
+There is a generator and an included adapter. Using the generator will place a more complex customizable adapter in your ```lib``` directory.
+
+A simple adapter is also provided, to use add the following to your active_admin initializer:
+``` ruby
+ActiveAdmin::Dependency.regulator!
+
+require 'regulator'
+require 'regulator/active_admin_adapter'
+ActiveAdmin.setup do |config|
+  config.authorization_adapter = "Regulator::ActiveAdminAdapter"
+  ...
+```
 
 ## Development
 

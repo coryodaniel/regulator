@@ -1,5 +1,9 @@
 # Regulator
 
+## 0.1.3 (2015-07-29)
+- made Regulator::PolicyFinder.new a bit more nimble
+- included a simple activeadmin adapter that can be 'required' instead of generated
+
 ## 0.1.2 (2015-07-23)
 - Add generators for install, policy, and activeadmin adapter
 
