@@ -71,8 +71,15 @@ module Regulator
   end
 
   included do
-    def self.policy_namespace
-      ( self.parent != Object ? self.parent : nil )
+    # Rails 6 renamed .parent to .module_parent
+    if respond_to?(:module_parent)
+      def self.policy_namespace
+        ( self.module_parent != Object ? self.module_parent : nil )
+      end
+    else
+      def self.policy_namespace
+        ( self.parent != Object ? self.parent : nil )
+      end
     end
 
     def policy_namespace
