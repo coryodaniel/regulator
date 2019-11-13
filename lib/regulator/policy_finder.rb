@@ -30,7 +30,12 @@ module Regulator
           # if the controller explicitly sets the policy_namespace to we want to keep it nil
           @controller.try(:policy_namespace)
         else
-          @controller.class.parent
+          # Rails 6 renamed .parent to .module_parent
+          if @controller.class.respond_to?(:module_parent)
+            @controller.class.module_parent
+          else
+            @controller.class.parent
+          end
         end
       end
     end
